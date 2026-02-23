@@ -1,0 +1,273 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-5 h-100">
+	<div class='row d-flex align-items-center justify-content-center text-center h-100 py-5'>
+		<div class='col-12 col-md-10 col-lg-10 col-xl-8'>
+			<h2 class='display-3'>{{curr_plan.race_name.values[0]}} Plan</h2>
+			<!-- Button trigger modal -->
+    		<a data-bs-toggle="modal" href="#updateTitle" style='color: inherit'>
+    		  	<i class="bi bi-pencil-square"></i>
+    		</a>
+		</div>
+	</div>
+	<div class='row d-flex align-items-center justify-content-center text-center h-100 py-5'>
+		<div class='col'>
+			<h2>Overview</h2>
+			<div class='row justify-content-center'>
+				<div class='col-12 col-md-10 col-lg-10 col-xl-8'>
+					<div class="card d-block container-fluid" style='overflow-x: auto;'>
+						<div class="row m-auto" style='min-width: 700px;'>	
+							<div id=plan-plot >
+        			   		   	<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+        			   		   	<script type='text/javascript'>
+        			   		   	  var graphs = {{ planBarJSON | safe }};
+        			   		   	  var config = {responsive: true};
+        			   		   	  Plotly.plot('plan-plot',graphs,{displayModeBar: false});
+        			   		   	</script>
+        			   		</div>
+        				</div>
+        			</div>
+        		</div>
+       		</div>
+       		<div class='row justify-content-center py-2'>
+				<div class='col-12 col-md-10 col-lg-10 col-xl-8'>
+					<form action={{url_for('dashboard.evaluation', user_id=current_user.id, plan_id=curr_plan.plan_id.values[0])}}>
+                    	<button class="btn bg-transparent button-round btn-lg btn-block" type="submit" onClick="this.form.submit(); this.disabled=true;">Evaluation</button>
+                    </form>
+				</div>
+			</div>
+        	<div class='row justify-content-center'>
+        		<div class='col-12 col-md-10 col-lg-10 col-xl-8'>
+        			<div class="accordion" id="accordionExample">
+  						<div class="accordion-item">
+  							<h3 class='accordion-header' id="headingOne" style='font-size:2em'>
+    					  		<button class="accordion-button collapsed d-block text-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" >Training Phases</button>
+    						</h3>
+    						<div id="collapseOne" class="accordion-collapse collapse " aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+    					  		<div class="accordion-body">
+    					    		<p class='lead'>Your training block is divided into multiple phases. Each phase will focus on a different facet of your fitness, and allow you to arrive at the starting line fit and fresh. The most important factor to your success in this training block will be consistency. No single workout will make or break your race goals. but showing up week in and week out and doing your best to accomplish the day's assignment will ultimately give you the greatest outcome.</p>
+    					    	<!--phase card start-->
+    					    	{% for p in df_curr_plan.phase.unique() %}
+    					    		{% if p == df_curr_plan.loc[df_curr_plan.date==today].phase.values[0] %}
+    					    			<h5>Current Phase:</h5>
+           								<div class="card my-2" style='border: 2px solid #055deb'>
+           							{% else %}
+										<div class="card my-2" >
+									{% endif %}
+									<!--START NEW PHASE CARD-->
+										<div class="card-header">
+					    					<h2 class="card-title">{{p.capitalize()}}</h2>		
+					    					{% if p =='down' %}
+										   		<h6  class="card-subtitle">Week: {{df_curr_plan.loc[df_curr_plan.phase==p].week.min()}} </h6>
+        	   								{% else %}
+										   		<h6  class="card-subtitle">Weeks: {{df_curr_plan.loc[df_curr_plan.phase==p].week.min()}} - {{df_curr_plan.loc[	df_curr_plan.phase==p].week.max()}}</h6>
+									    	{% endif %}
+					    				</div>
+					    				<div class='card-body'>
+					    					<p class="card-text lead">{{phase.loc[phase.phase_name==p].phase_desc.values[0]}}</p>
+					    				</div>
+									<!--END NEW PHASE CARD-->
+									</div>
+           						{% endfor %}
+    					    	<!--phase card end-->
+    					  		</div>
+    						</div>
+  						</div>
+  					</div>
+  				</div>
+        	</div>
+        </div>
+	</div>
+	<div class='row d-flex align-items-center justify-content-center text-center h-100 py-5'>
+		<div class='col-12 col-md-10 col-lg-10 col-xl-8'>
+			<h2>Today's Training:</h2>
+			<div class="card" >
+				<div class="card-header mb-0">
+				  <h3 class="card-title">{{df_today.day_desc.values[0]}}, {{df_today.month.values[0]}} {{df_today.date.values[0].day}}</h3>
+				</div>
+				<div class="row no-gutters">
+					<div class="col-4 d-flex align-items-center justify-content-center" style='border-right: 1px solid grey'>
+		    			<div class="card-body">
+		    				<p class="card-text lead m-0">{{df_today.run_name.values[0]}}</p>
+		    			</div>
+		    		</div>
+		    		<div class="col-4 d-flex align-items-center justify-content-center" style='border-right: 1px solid grey'>
+		    			<div class="card-body">
+		    				<p class="card-text lead m-0">Distance: </p>
+		    				<p class="card-text lead m-0">{{df_today.display_dist.values[0]}} {{df_today.units.values[0]}}s</p>
+		    			</div>
+		    		</div>
+		    		<div class="col-4 d-flex align-items-center justify-content-center">
+		    			<div class="card-body">
+		    				<p class="card-text lead m-0">Pace:</p>
+		    				<p class="card-text lead m-0">{{df_today.pace.values[0]}}</p>
+		    			</div>
+		    		</div>		    	
+		  		</div>
+		  		<div class="card-footer" >	
+		  			<p class='mb-0 '>{{df_today.run_desc.values[0]}}</p>
+					{% if df_today.run_id.values[0] in [3,5,6] %}
+						<p class='m-0 '>See <a href={{url_for('dashboard.guide')}}>Workout Guide</a> for more information on this workout</p>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='row d-flex align-items-center justify-content-center text-center h-100 pt-5 pb-3'>
+		<div class='col'>
+			<h2>This Week</h2>
+			<div class='row justify-content-center'>
+				<div class='col-12 col-md-10 col-lg-10 col-xl-8'>
+					<div class="card" >
+					  	<div class="card-header mb-0">
+					  	  <h3 class="card-title">Phase: {{df_today.phase.values[0].capitalize()}}</h3>
+					  	  <h3 class="card-title mb-0">Total Volume: {{df_week.dist.sum().round(1)}} {{df_today.units.values[0]}}s</h3>
+					  	</div>
+					  	<div class="card-body d-flex align-items-center justify-content-center m-0 p-0">
+							<div id=week-plot style='width: 500px;'>
+               					<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+               					<script type='text/javascript'>
+               					  var graphs = {{ weekPieJSON | safe }};
+               					  var config = {responsive: true};
+               					  Plotly.plot('week-plot',graphs,{displayModeBar: false});
+               					</script>
+           					</div>
+           				</div>
+           				<div class="card-footer m-0">
+           					<a href={{url_for('strava.auth')}} title=""><img src="{{ url_for('static',filename='images/strava_api.png') }}" class="img-responsive" style='height:30px'></a>
+					  	</div>
+           			</div>
+           		</div>	
+           	</div>
+			<div class='row justify-content-center'>
+				<h3 class='m-3'>Training Schedule:</h3>				
+				<div class='col-12 col-md-10 col-lg-10 col-xl-8'>
+           			{% for index, row in df_week.iterrows():%}
+           				{% if row.date == today %}
+           					<div class="card my-2" style='border: 2px solid #055deb;'>
+           				{% else %}
+							<div class="card my-2" >
+						{% endif %}
+						<div class="card-header" >
+							<h4 class="card-title">{{row.day_desc}}, {{row.month}} {{row.date.day}}</h4>
+						</div>
+						<div class="row no-gutters">
+							<div class="col-4 d-flex align-items-center justify-content-center" style='border-right: 1px solid grey;'>
+		    					<div class="card-body" >
+		    						<p class="card-text lead m-0">{{row.run_name}}</p>
+		    					</div>
+		    				</div>
+		    				<div class="col-4 d-flex align-items-center justify-content-center" style='border-right: 1px solid grey;'>
+		    					<div class="card-body" >
+		    						<p class="card-text lead m-0">Distance:</p>
+		    						<p class="card-text lead m-0">{{row.display_dist}} {{row.units}}s</p>
+		    					</div>
+		    				</div>
+		    				<div class="col-4 d-flex align-items-center justify-content-center">
+		    					<div class="card-body" >
+		    						<p class="card-text lead m-0">Pace:</p>
+		    						<p class="card-text lead m-0">{{row.pace}}</p>
+		    					</div>
+		    				</div>
+		  				</div>
+		  				{% if row.run_id in [3,5,6] %}
+		  					<div class="card-footer" >	
+		  						{% if row.run_id in [3, 5]%}
+						   			<p class='mb-0 '>{{row.run_desc}}</p>
+						   		{% endif %}
+						   		{% if row.run_id in [3,5,6] %}
+						   			<p class='m-0 '>See <a href={{url_for('dashboard.guide')}}>Workout Guide</a> for more information on this workout</p>
+						   		{% endif %}
+						   	</div>
+		  				{% endif %}
+						</div>
+           			{% endfor %}
+           		</div>
+           	</div>
+		</div>
+	</div>
+	{% if last_week==False %}
+	<div class='row d-flex align-items-center justify-content-center text-center h-100 pt-2 pb-5'>		
+		<div class='col-12 col-md-10 col-lg-10 col-xl-8'>
+			<!--START NEXT WEEK ACCORDION-->
+			<div class="accordion mt-2" id="accordionExample2">
+  				<div class="accordion-item">
+  					<h3 class='accordion-header' id="headingOne" style='font-size:2em'>
+    					<button class="accordion-button collapsed d-block text-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne" >Next Week</button>
+    				</h3>
+    				<div id="collapseTwo" class="accordion-collapse collapse " aria-labelledby="headingOne" data-bs-parent="#accordionExample2">
+    				  	<div class="accordion-body">
+    				   	<!--START NEXT WEEK TRAINING SCHEDULE-->
+           				{% for index, row in df_next_week.iterrows():%}
+           					<div class="card my-2" >
+		   						<div class="card-header" >
+									<h4 class="card-title">{{row.day_desc}}, {{row.month}} {{row.date.day}}</h4>
+								</div>
+		   					  	<div class="row no-gutters">
+									<div class="col-4 d-flex align-items-center justify-content-center" style='border-right: 1px solid grey;'>
+		    							<div class="card-body" >
+		    								<p class="card-text lead m-0">{{row.run_name}}</p>
+		    							</div>
+		    						</div>
+		    						<div class="col-4 d-flex align-items-center justify-content-center" style='border-right: 1px solid grey;'>
+		    							<div class="card-body" >
+		    								<p class="card-text lead m-0">Distance:</p>
+		    								<p class="card-text lead m-0">{{row.display_dist}} {{row.units}}s</p>
+		    							</div>
+		    						</div>
+		    						<div class="col-4 d-flex align-items-center justify-content-center">
+		    							<div class="card-body" >
+		    								<p class="card-text lead m-0">Pace:</p>
+		    								<p class="card-text lead m-0">{{row.pace}}</p>
+		    							</div>
+		    						</div>
+		  						</div>
+							</div>
+           				{% endfor %}
+    				   	<!--END NEXT WEEK TRAINING SCHEDULE-->
+						</div>
+    				</div>
+  				</div>
+  			</div>
+			<!--END NEXT WEEK ACCORDION-->
+		</div>
+	</div>
+	{% endif %}
+
+	<div class='row d-flex align-items-center justify-content-center text-center h-100 py-4'>
+		<div class='col-12 col-md-10 col-lg-10 col-xl-8'>
+			<!-- Button trigger modal -->
+			<a href={{url_for('payment.modify', plan_id=curr_plan.plan_id.values[0])}} style='color: inherit'>				
+				Modify Plan <i class="bi bi-pencil-square"></i>			
+			</a>
+		</div>
+	</div>	
+
+	<div class='row d-flex align-items-center justify-content-center text-center'>
+		<div class='col-12 col-md-8 col-lg-6 col-xl-5'>
+			<img class="img-fluid" src="{{ url_for('static',filename='images/ovlfull.svg') }}" style='height:100px'>
+		</div>
+	</div>
+	<div class='row d-flex align-items-center justify-content-center text-center h-100 py-5'>
+		<div class='col-12 col-md-8 col-lg-6 col-xl-5'>
+			<form action={{url_for('dashboard.logout')}}>
+				<button type="submit" class="btn bg-transparent button-round btn-lg btn-block">
+					Logout
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script> 
+   function clickAndDisable(link) {
+     // disable subsequent clicks
+     link.onclick = function(event) {
+        event.preventDefault();
+     }
+   }   
+</script>
+
+{% endblock %}

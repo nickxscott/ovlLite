@@ -1,0 +1,19 @@
+workout_type,name,desc,distance,pace ,phase,dist_level_min,dist_level_max
+workout,8 x 400,1 mile warm up followd by 8 reps of 400m with 90 seconds easy jogging in between reps. Finish with 1 mile cool down,5,5k ,base,0,4.99
+workout,12 x 400,1 mile warm up followd by 10 reps of 400m with 60 seconds easy jogging in between reps. Finish with 1 mile cool down,6.75,5k ,base,5,10
+workout,4 x 800m,1 mile warm up followd by 4 reps of 800m with 90 seconds easy jogging in between reps. Finish with 1 mile cool down,4.5,10k down to 5k,base,0,4.99
+workout,6 x 800m,1 mile warm up followd by 6 reps of 800m with 90 seconds easy jogging in between reps. Finish with 1 mile cool down,5.75,10k down to 5k,base,5,10
+workout,5 x 1 minute hill sprints,1.5 mile warm up followed by 5  reps of approximately 60 second hill sprints. Finish with 1.5 mile cool down,4,hmp down to 10k,base,0,4.99
+workout,10 x 1 minute hill sprints,1.5 mile warm up followed by 10  reps of approximately 60 second hill sprints. Finish with 1.5 mile cool down,5,hmp down to 10k,base,5,10
+workout,6 x 1k,1 mile warm-up followed by 6 reps of 1k with 90 seconds easy jogging in between reps. Finish with 1 mile cool down.,6.5,10k down to 5k,speed,5,10
+workout,5 x 1k,1 mile warm-up followed by 5 reps of 1k with 2 minutes easy jogging in between reps. Finish with 1 mile cool down.,5.75,10k down to 5k,speed,0,4.99
+workout,"6 x 800, 6 x 400",1 mile warm-up followd by 6 reps of 800m with 90 seconds easy jogging in between. Then 6 reps of 400m with 90 seconds easy jogging in between. Finish with 1 mile cool down.,7.5,"800s at 10k pace, 400s at 5k pace, 100s at full effort",speed,5,10
+workout,"5 x 800, 5 x 400",1 mile warm-up followd by 5 reps of 800m with 2 minutes easy jogging in between. Then 4 reps of 400m with 90 seconds easy jogging in between. Finish with 1 mile cool down.,6.5,"800s at 10k pace, 400s at 5k pace, 100s at full effort",speed,0,4.99
+workout,2 x 2 mile,1 mile warm-up followd by 2 reps of 2 miles with 2 minutes easy jogging in between. Finish with 1 mile cool down.,6.5,,speed,0,4.99
+workout,3 x 2 mile,1 mile warm-up followd by 3 reps of 2 miles with 2 minutes easy jogging in between. Finish with 1 mile cool down.,8.75,,speed,5,10
+workout,4 x 1 mile,1 mile warm-up followd by 4 reps of 1 mile with 2 minutes easy jogging in between.  Finish with 1 mile cool down.,6.5,,speed,0,4.99
+workout,5 x 1 mile,1 mile warm-up followd by 5 reps of 1 mile with 90 seconds easy jogging in between.  Finish with 1 mile cool down.,7.75,,speed,5,10
+long_run,10k at race pace,"After a substantial warm-up, run 10km at goal race pace. Continue to cool down at an easy jogging pace until you've completed the total long run distance.",,MP,speed,7,10
+long_run,2 x 5k at race pace,"After a substantial warm-up, complete 2 sets of 5km at goal race pace with a minimum of 5 minutes recovery between sets. Continue to cool down at an easy jogging pace until you've completed the total long run distance.",,MP,speed,5,6.99
+long_run,5mi at race pace,"After a substantial warm-up, run 10 miles at goal race pace. Continue to cool down at an easy jogging pace until you've completed the total long run distance.",,MP,speed,5,6.99
+long_run,3 x 2mi at race pace,"After a substantial warm-up, complete 3 sets of 2mi at goal race pace with a minimum of 3 minutes recovery between sets",,MP,speed,7,10

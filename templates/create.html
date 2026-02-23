@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!--<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">-->
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <!--<span aria-hidden="true">&times;</span>-->
+        </div>
+        <div class="modal-body">
+            <h3>Pace Limits</h3>
+            <div class='table-responsive mb-3'>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"><span class="nowrap">Race Distance</span></th>
+                            <th scope="col"><span class="nowrap">Fastest Pace</span></th>
+                            <th scope="col"><span class="nowrap">Slowest Pace</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td><span class="nowrap">5k</span></td>
+                                <td><span class="nowrap">5:04/mile (3:09/km)</span></td>
+                                <td><span class="nowrap">9:36/mile (5:58/km)</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="nowrap">10k</span></td>
+                                <td><span class="nowrap">5:08/mile (3:11/km)</span></td>
+                                <td><span class="nowrap">9:54/mile (6:09/km)</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="nowrap">Half-Marathon</span></td>
+                                <td><span class="nowrap">5:20/mile (3:19/km)</span></td>
+                                <td><span class="nowrap">10:38/mile (6:36/km)</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="nowrap">Marathon</span></td>
+                                <td><span class="nowrap">5:45/mile (3:34/km)</span></td>
+                                <td><span class="nowrap">12:24/mile (7:42/km)</span></td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h3>Max Weekly Volume</h3>
+            <div class='table-responsive mb-3'>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"><span class="nowrap">Race Distance</span></th>
+                            <th scope="col"><span class="nowrap">Fastest Plans</span></th>
+                            <th scope="col"><span class="nowrap">Slowest Plans</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td><span class="nowrap">5k</span></td>
+                                <td><span class="nowrap">45 miles ({{'%0.1f'|format((45*1.609)|float)}} km)</span></td>
+                                <td><span class="nowrap">22.5 miles ({{'%0.1f'|format((22.5*1.609)|float)}} km)</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="nowrap">10k</span></td>
+                                <td><span class="nowrap">50 miles ({{'%0.1f'|format((50*1.609)|float)}} km)</span></td>
+                                <td><span class="nowrap">25 miles ({{'%0.1f'|format((25*1.609)|float)}} km)</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="nowrap">Half-Marathon</span></td>
+                                <td><span class="nowrap">60 miles ({{'%0.1f'|format((60*1.609)|float)}} km)</span></td>
+                                <td><span class="nowrap">30 miles ({{'%0.1f'|format((30*1.609)|float)}} km)</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="nowrap">Marathon</span></td>
+                                <td><span class="nowrap">75 miles ({{'%0.1f'|format((75*1.609)|float)}} km)</span></td>
+                                <td><span class="nowrap">37.5 miles ({{'%0.1f'|format((37.5*1.609)|float)}} km)</span></td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal -->
+  <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body p-5">
+              <h2 class="text-center mb-5">Create Training Plan</h2>
+              {% if plan %}
+                    <div class="alert alert-primary d-flex align-items-center mt-2 text-center" role="alert">
+                                    <b>Scroll down to see plan</b>
+                            </div>
+                  {% endif %}
+              <form method='POST' autocomplete="off">
+              {{ form.csrf_token }}
+                <div class="form-outline mb-4">
+                  {{ form.name(class="form-control form-control-lg") }}
+                  <label class="form-label" for="form3Example3cg">Race Name</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                  {{ form.date(class="form-control form-control-lg") }}
+                  <label class="form-label" for="form3Example1cg">Race Date</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                  {{ form.dist(class="form-control form-control-lg") }}
+                  <label class="form-label" for="form3Example1cg">Race Distance</label>
+                </div>
+
+                <div class="form-outline mb-1 text-start">
+                  {{ form.weeks(class="form-control form-control-lg") }}
+                  <label class="form-label" for="form3Example3cg">How many weeks can you train?</label>
+                </div>
+
+                <p id='start_date_temp' class='text-start'></p>
+                <!--<p class='border rounded p-1' class='text-start'>NOTE: Plans are priced at $1 per week. For example, a 12 week plan will cost $12. You will have a chance to review your order after clicking "Create Plan".</p>-->
+
+                <h3> Goal Pace </h3>
+                <div class="d-inline-flex">
+                  <div class="input-group mb-2 justify-content-start row flex-nowrap w-100">
+                        <div class='col m-0 pe-0'>
+                          {{ form.pace_min(class="form-control form-control-lg w-auto") }}
+                        </div>
+                        <div class='col m-0 w-auto'>
+                          <h3> : </h3>
+                        </div>
+                        <div class='col m-0 p-0 w-auto'>
+                          {{ form.pace_sec(class="form-control form-control-lg w-auto") }}
+                        </div>
+                        <div class='col w-auto'>
+                          <h3> / </h3>
+                      </div>               
+                      <div class='col m-0 p-0 w-auto'>
+                        {{ form.units(class="form-control form-control-lg w-auto") }}
+                      </div> 
+                  </div>
+                </div>
+                <!-- Button trigger modal -->
+                <div class="d-flex justify-content-start  text-start mb-3">
+                  <a data-bs-toggle="modal" href="#exampleModalCenter" style='color: inherit'>
+                    Pace Limits & Weekly Volume Charts
+                  </a>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                  <button type="submit" class="btn bg-transparent button-round btn-lg btn-block" onClick="this.form.submit(); this.disabled=true; this.innerText='Creating…';">
+                    Create Plan
+                  </button>
+                  
+                </div>
+                    {% if error == True %}
+                        {% for message in get_flashed_messages()%}
+                            <div class="alert alert-primary d-flex align-items-center mt-2" role="alert">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                                  <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                                </svg>
+                                <div>
+                                    <b>{{message}} </b>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+              </form>
+                <script>
+                    var race_date = document.getElementById("date");
+                    var wks = document.getElementById("weeks");
+                    race_date.onchange = function()  {
+                        rd = race_date.value;
+                        weeks=wks.value;
+                        fetch('/race_date/' + rd+'/'+weeks)
+                        .then(response => response.json())
+                        //.then((response) => {
+                        //    document.getElementById("start_date_temp").innerHTML = '<b>Plan Start:</b> '+response.plan_start+'<br>'+'<b>Plan Price</b>: $'+weeks+' ($1 x '+weeks+' weeks)'
+                        //});
+                        .then((response) => {
+                            document.getElementById("start_date_temp").innerHTML = '<b>Plan Start:</b> '+response.plan_start
+                        });
+                    }
+                    weeks.onchange = function()  {
+                        rd = race_date.value;
+                        weeks=wks.value;
+                        fetch('/race_date/' + rd+'/'+weeks)
+                        .then(response => response.json())
+                        //.then((response) => {
+                        //   document.getElementById("start_date_temp").innerHTML = '<b>Plan Start:</b> '+response.plan_start+'<br>'+'<b>Plan Price</b>: $'+weeks+' ($1 x '+weeks+' weeks)'
+                        //});
+                        .then((response) => {
+                            document.getElementById("start_date_temp").innerHTML = '<b>Plan Start:</b> '+response.plan_start
+                        });
+                    }
+                </script>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% if plan %}
+  <div class='row d-flex align-items-center justify-content-center text-center h-100 py-1'>
+    <div class='col'>
+      <h2>Overview</h2>
+      <div class='row justify-content-center'>
+        <div class='col-12 col-md-10 col-lg-10 col-xl-8'>
+          <div class="card d-block container-fluid" style='overflow-x: auto;'>
+            <div class="row m-auto" style='min-width: 700px;'>  
+              <div id=plan-plot >
+                        <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+                        <script type='text/javascript'>
+                          var graphs = {{ planBarJSON | safe }};
+                          var config = {responsive: true};
+                          Plotly.plot('plan-plot',graphs,{displayModeBar: false});
+                        </script>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
+  {% endif %}
+
+{% endblock %}

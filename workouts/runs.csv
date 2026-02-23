@@ -1,0 +1,8 @@
+RUN_ID,RUN_TYPE,RUN_NAME,RUN_DESC
+1,rest,Rest Day,This is a rest day. Prioritize relaxation and recovery.
+2,easy,Easy Day,This run should be easy enough that you could carry on a conversation throughout the run.
+3,workout,,
+4,long_run,Long Run,"The goal of this run is to build endurance, not speed. Keep the effort easy and focus on completing the distance."
+5,long_workout,,
+6,easy_taper,Easy with Strides,"The majority of this run should be at your usual easy pace, but do 3-5 reps of 30-60 second efforts at your goal race pace in the final mile of the run.This will allow you to maintain your top-end fitness as you taper toward race day."
+7,race,Race Day,"Race day has arrived! Be patient, stick to your plan, and trust in your training. Good luck!"

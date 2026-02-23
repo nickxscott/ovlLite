@@ -1,0 +1,88 @@
+h1 {
+  color: white
+}
+
+.without_ampm::-webkit-datetime-edit-ampm-field {
+   display: none;
+ }
+
+ input[type=time]::-webkit-clear-button {
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   -o-appearance: none;
+   -ms-appearance:none;
+   appearance: none;
+   margin: -10px; 
+ }
+
+ .modebar {
+display: none !important;
+}
+
+.accordion {
+	--bs-accordion-btn-color: none;
+	--bs-accordion-btn-bg: none;
+	--bs-accordion-active-color: none;
+	--bs-accordion-active-bg: none;
+}
+
+.accordion-button{
+	font-size:0.8em;
+}
+
+.accordion-button::after {
+  position: absolute;
+  z-index: 100;
+  right: 16px;
+}
+
+.bg {
+  background-image: url('../images/background_dark.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+#background_wrap {
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-image: url('../images/background_dark.jpg');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.login-opacity {opacity: 0.9;}
+
+.nowrap {
+        white-space:nowrap;
+    }
+
+.button-round {
+  border-radius: 40px;
+  border:2px solid grey;
+}
+.button-round:hover{
+   border:2px solid #055deb!important;
+}
+.button-round:active{
+   border:2px solid #055deb!important;
+}
+#button-warning:hover{
+   border:2px solid #dc3545!important;
+}
+
+a{color: inherit}
+a:active{
+   color: #055deb!important;
+}
+a:hover{
+   color: #055deb!important;
+}
+
+.button-link:hover {
+      color:none!important;
+}
