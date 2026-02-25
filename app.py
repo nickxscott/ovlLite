@@ -1,6 +1,6 @@
 
 #imports
-from flask import Flask, url_for, render_template, request, jsonify
+from flask import Flask, url_for, render_template, request, jsonify, flash
 from flask_login import LoginManager, login_required
 from flask_bcrypt import Bcrypt
 from cryptography.fernet import Fernet
@@ -45,13 +45,13 @@ def home():
 		#rule 1 - not too fast. cannot exceed level 11.1
 		if result[1] > 11.1:
 			flash('You\'re too fast for us! Try a slower plan, or you may require a professional coach. Good luck!')
-			return render_template('/payment/create.html', form=form, error=True)
+			return render_template('create.html', form=form, error=True)
 		else:
 			pass			
 		#rule 2 - not too slow. cannot be less than level 1.1
 		if result[1] < 1.1:
 			flash('We\'re sorry, but we cannot create a plan for that pace. Try a beginner plan, or seek a coach to acheive your goals. Good luck!')
-			return render_template('/payment/create.html', form=form, error=True)
+			return render_template('create.html', form=form, error=True)
 		else:
 			pass
 
