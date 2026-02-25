@@ -26,7 +26,6 @@ def home():
 	plan=False
 	if request.method=='POST':
 		plan=True
-		race_name=form.name.data
 		race_date=form.date.data
 		weeks=int(form.weeks.data)
 		#get race speed depending on units (km vs miles)
@@ -55,15 +54,26 @@ def home():
 			return render_template('/payment/create.html', form=form, error=True)
 		else:
 			pass
-		#save plan.csv file to temp
-		result[0].to_csv('test.csv', index=False)
 
 		planBar=overview_bar(df=result[0], units=units)
-
+		if units=='km':
+			cols=['date', 'day_desc', 'week', 'phase', 'dist_km', 'pace', 'run_name', 'run_desc']
+		else:
+			cols=['date', 'day_desc', 'week', 'phase', 'distance', 'pace', 'run_name', 'run_desc']
+		display_names={	'date':'Date', 
+						'day_desc': 'Day', 
+						'week':'Week', 
+						'phase':'Phase', 
+						'distance':'Distance', 
+						'dist_km':'Distance',
+						'pace':'Pace', 
+						'run_name':'Run Name', 
+						'run_desc':'Description'}
 		return render_template("create.html", 
 								form=form,
 								planBarJSON=planBar,
-								plan=plan)
+								plan=plan,
+								df=result[0][cols].rename(columns=display_names))
 	return render_template("create.html", 
 							form=form,
 							plan=plan)

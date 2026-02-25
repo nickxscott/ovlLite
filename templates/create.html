@@ -86,7 +86,7 @@
   <!-- End Modal -->
   <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+        <div class="col-12 col-md-9 col-lg-6 col-xl-4">
           <div class="card" style="border-radius: 15px;">
             <div class="card-body p-5">
               <h2 class="text-center mb-5">Create Training Plan</h2>
@@ -97,11 +97,6 @@
                   {% endif %}
               <form method='POST' autocomplete="off">
               {{ form.csrf_token }}
-                <div class="form-outline mb-4">
-                  {{ form.name(class="form-control form-control-lg") }}
-                  <label class="form-label" for="form3Example3cg">Race Name</label>
-                </div>
-
                 <div class="form-outline mb-4">
                   {{ form.date(class="form-control form-control-lg") }}
                   <label class="form-label" for="form3Example1cg">Race Date</label>
@@ -220,6 +215,41 @@
             </div>
           </div>
         </div>
+  </div>
+  <div class='row d-flex align-items-center justify-content-center text-center h-100 py-1'>
+    <div class='col'>
+      <h2>Plan Details</h2>
+      <div class='row justify-content-center'>
+        <div class='col-12 col-md-10 col-lg-10 col-xl-8'>
+          <div class="card d-block container-fluid" style='overflow: auto;'>
+          <div class='card-body'>
+            <div class='row d-block container-fluid mb-3' style="overflow: auto; max-height: 80vh;"> 
+                <table class="table table-striped table-hover table-bordered display text-start" id='' style='width:100%'>
+                <thead>
+                  <tr>
+                  {% for c in df.columns: %}
+                    <th>
+                      <span class="nowrap ">{{c}}</span>
+                    </th>
+                  {% endfor %}
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for index, row in df.iterrows(): %}
+                    <tr>
+                        {% for d in row: %}                 
+                        <td><span class="nowrap">{{d}}</span></td>
+                      {% endfor %}
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
   </div>
   {% endif %}
 

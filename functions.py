@@ -710,7 +710,7 @@ def get_calendar_hardcore(date, weeks, speed, race_dist, units):
     #create km column for distance
     dist_km=[]
     for index, row in df_training_cal.iterrows():
-        dist_km.append(round(row.distance*1.60934, 2))
+        dist_km.append(round(row.distance*1.60934, 1))
     df_training_cal['dist_km']=dist_km
     
     #deal with weekday races
@@ -821,7 +821,7 @@ def createSec(r1, r2):
 def overview_bar(df, units):
     if units=='km':
         #df_bar=df.groupby(['phase','week'])['dist_km'].sum().reset_index().rename(columns={'dist_km':'dist'})
-        df_bar=df.groupby(['phase','week']).agg({'dist_km':'sum', 'date':'min'}).reset_index().rename(columns={'dist_km':'disance'})
+        df_bar=df.groupby(['phase','week']).agg({'dist_km':'sum', 'date':'min'}).reset_index().rename(columns={'dist_km':'distance'})
     else:
         df_bar=df.groupby(['phase','week']).agg({'distance':'sum', 'date':'min'}).reset_index()
 
