@@ -840,17 +840,22 @@ def overview_bar(df, units):
     for index, row in df.iterrows():
         if row.date == today:
             this_week.append(str(row.week))
-    #color "this week" in blue
-    colors = {this_week[0]: "#055deb"}
-    #color all previous weeks in grey
-    for i in range(1,int(this_week[0])):
-        colors[str(i)]='#545454'#545454 KEEPER
+    colors={}
+    #if plan has already started, adjust color of bars
+    if len(this_week)>0:
+        #color "this week" in blue
+        colors = {this_week[0]: "#055deb"}
+        #color all previous weeks in grey
+        for i in range(1,int(this_week[0])):
+            colors[str(i)]='#545454'#545454 KEEPER
+    #else all bars are grey
+    else:
+        for i in range(len(df_bar.week_str.unique())+1):
+            colors[str(i)]='#545454'#545454 KEEPER
     #and the rest transparent
     color_discrete_map = {
         c: colors.get(c, default_color) 
         for c in df_bar.week_str.unique()}
-    
-    #units=df.units.unique()[0]
     
     #create chart
     fig = px.bar(df_bar, x='week', y='distance',
